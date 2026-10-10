@@ -8,3 +8,4 @@ build/
 sdkconfig.emulator
 sdkconfig.tdisplay
 sdkconfig.tdisplay_s3
+src/wifi_config.h
