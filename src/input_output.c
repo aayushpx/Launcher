@@ -29,7 +29,12 @@ void storage_write_int(char *name, int val) {
 }
 
 void input_output_init() {
-    gpio_set_direction(0, GPIO_MODE_INPUT);
-    gpio_set_direction(14, GPIO_MODE_INPUT);
-    gpio_set_direction(35, GPIO_MODE_INPUT);
+    gpio_set_direction(1, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(1, GPIO_PULLUP_ONLY);
+
+    gpio_set_direction(2, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(2, GPIO_PULLUP_ONLY);
+
+    gpio_set_direction(3, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(3, GPIO_PULLUP_ONLY);
 }
