@@ -15,8 +15,6 @@ typedef struct {
 
 esp_err_t mpu6050_init(void);
 esp_err_t mpu6050_read(mpu6050_reading_t *reading);
-void mpu6050_scan_bus(void);
-void mpu6050_diagnose(void);
 
 #endif
 

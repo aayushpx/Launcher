@@ -1,4 +1,3 @@
-#include <esp_system.h>
 #include <esp_wifi.h>
 #include <esp_event.h>
 #include <esp_netif.h>
@@ -6,9 +5,7 @@
 #include <freertos/event_groups.h>
 #include <freertos/task.h>
 #include <esp_log.h>
-#include <nvs_flash.h>
 #include <stdio.h>
-#include <string.h>
 
 #include "networking.h"
 #include "wifi_config.h"

@@ -1,4 +1,3 @@
-#include <esp_system.h>
 #include <esp_timer.h>
 #include <esp_wifi.h>
 #include <esp_event.h>
@@ -7,7 +6,6 @@
 #include <freertos/event_groups.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <esp_log.h>
 #include "mqtt_client.h"
 #include "networking.h"
@@ -18,16 +16,13 @@
 EventGroupHandle_t network_event_group;
 char network_event[64];
 #define TAG "Networking"
-int bg_col = 0;
 esp_netif_t *network_interface = NULL;
 esp_netif_t *network_interface_ap = NULL;
 
 static mqtt_callback_type mqtt_callback = NULL;
 static bool mqtt_is_connected = false;
 
-bool mqtt_connected(void);
-
-esp_mqtt_client_handle_t mqtt_client = NULL;
+static esp_mqtt_client_handle_t mqtt_client = NULL;
 
 bool mqtt_connected(void)
 {
