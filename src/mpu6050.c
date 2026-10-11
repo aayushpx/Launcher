@@ -22,8 +22,7 @@ static const char *TAG = "MPU6050";
 static i2c_master_bus_handle_t bus_handle;
 static i2c_master_dev_handle_t dev_handle;
 
-static esp_err_t write_register(uint8_t reg, uint8_t value)
-{
+static esp_err_t write_register(uint8_t reg, uint8_t value) {
   uint8_t data[2] = {reg, value};
 
   return i2c_master_transmit(
@@ -31,20 +30,15 @@ static esp_err_t write_register(uint8_t reg, uint8_t value)
 
 }
 
-static esp_err_t read_registers(
-    uint8_t start_reg, uint8_t *data, size_t length)
-{
-  return i2c_master_transmit_receive(
-      dev_handle, &start_reg, 1, data, length, 100);
+static esp_err_t read_registers(uint8_t start_reg, uint8_t *data, size_t length) {
+  return i2c_master_transmit_receive(dev_handle, &start_reg, 1, data, length, 100);
 }
 
-static int16_t read_int16(const uint8_t *data)
-{
+static int16_t read_int16(const uint8_t *data) {
   return (int16_t)(((uint16_t)data[0] << 8) | data[1]);
 }
 
-esp_err_t mpu6050_init(void)
-{
+esp_err_t mpu6050_init(void) {
   i2c_master_bus_config_t bus_cfg = {
     .i2c_port = I2C_NUM_0,
     .sda_io_num = MPU6050_SDA,
@@ -85,7 +79,7 @@ esp_err_t mpu6050_init(void)
 
   ESP_LOGI(TAG, "WHO_AM_I = 0x%02X", id);
 
-  // Wake the sensor using its internal oscillator.
+  // Wake the sensor using its internal oscillator
   err = write_register(MPU6050_REG_PWR_MGMT, 0x00);
   if (err != ESP_OK) {
     ESP_LOGE(TAG, "Wake-up write failed: %s",
@@ -126,8 +120,7 @@ esp_err_t mpu6050_init(void)
   return ESP_OK;
 }
 
-esp_err_t mpu6050_read(mpu6050_reading_t *reading)
-{
+esp_err_t mpu6050_read(mpu6050_reading_t *reading) {
   if (reading == NULL || dev_handle == NULL) {
     return ESP_ERR_INVALID_STATE;
   }

@@ -11,7 +11,7 @@ void event_log_init(void);
 void event_log_add(const char *message);
 int event_log_count(void);
 
-/* Index 0 returns the newest event. */
+// Index 0 returns the newest event
 int event_log_get_recent(int index,
                          char *message,
                          size_t message_size,
