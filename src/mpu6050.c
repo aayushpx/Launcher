@@ -43,50 +43,6 @@ static int16_t read_int16(const uint8_t *data)
   return (int16_t)(((uint16_t)data[0] << 8) | data[1]);
 }
 
-
-void mpu6050_diagnose(void)
-{
-  const uint8_t registers[] = {
-    0x75, // WHO_AM_I
-    0x6B, // PWR_MGMT_1
-    0x1B, // GYRO_CONFIG
-    0x1C, // ACCEL_CONFIG
-  };
-
-  for (size_t i = 0;
-      i < sizeof(registers) / sizeof(registers[0]);
-      i++) {
-    uint8_t value = 0;
-    esp_err_t err = read_registers(
-        registers[i], &value, 1);
-
-    if (err == ESP_OK) {
-      ESP_LOGI(TAG, "Register 0x%02X = 0x%02X",
-          registers[i], value);
-    } else {
-      ESP_LOGE(TAG, "Register 0x%02X read failed: %s",
-          registers[i], esp_err_to_name(err));
-    }
-  }
-}
-
-
-void mpu6050_scan_bus(void)
-{
-  ESP_LOGI(TAG, "Scanning I2C bus...");
-
-  for (uint8_t address = 1; address < 127; address++) {
-    esp_err_t err = i2c_master_probe(
-        bus_handle, address, 100);
-
-    if (err == ESP_OK) {
-      ESP_LOGI(TAG, "I2C device found at 0x%02X", address);
-    }
-  }
-
-  ESP_LOGI(TAG, "I2C scan complete");
-}
-
 esp_err_t mpu6050_init(void)
 {
   i2c_master_bus_config_t bus_cfg = {
@@ -150,10 +106,18 @@ esp_err_t mpu6050_init(void)
   ESP_LOGI(TAG, "PWR_MGMT_1 after wake = 0x%02X", power);
 
   err = write_register(MPU6050_REG_ACCEL_CFG, 0x00);
-  if (err != ESP_OK) return err;
+  if (err != ESP_OK) {
+    ESP_LOGE(TAG, "Accelerometer config write failed: %s",
+        esp_err_to_name(err));
+    return err;
+  }
 
   err = write_register(MPU6050_REG_GYRO_CFG, 0x00);
-  if (err != ESP_OK) return err;
+  if (err != ESP_OK) {
+    ESP_LOGE(TAG, "Gyroscope config write failed: %s",
+        esp_err_to_name(err));
+    return err;
+  }
 
   ESP_LOGI(TAG,
       "Sensor responds over I2C; identity reported as 0x%02X",
