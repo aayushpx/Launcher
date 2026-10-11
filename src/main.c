@@ -14,12 +14,6 @@
 #include "networking.h"
 #include "nvs_flash.h"
 
-/*
- * Verbose periodic diagnostics (high-frequency sensor stream, screen
- * changes). Disabled by default to keep the serial log readable.
- * Enable during hardware debugging by adding -DLAUNCHER_DEBUG to the
- * build_flags in platformio.ini.
- */
 #ifdef LAUNCHER_DEBUG
 #define DEBUG_PRINTF(...) printf(__VA_ARGS__)
 #else

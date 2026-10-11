@@ -114,11 +114,6 @@ void wifi_disconnect(void)
     }
 }
 
-/*
- * Connect to the configured Wi-Fi network.
- * The lecturer's version also draws its own Wi-Fi demo screen.
- * This version leaves the display to the Launcher application.
- */
 void wifi_connect(int onlyconnect)
 {
     (void)onlyconnect;
